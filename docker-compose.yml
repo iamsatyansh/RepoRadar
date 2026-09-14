@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: reporadar
+      POSTGRES_USER: reporadar
+      POSTGRES_PASSWORD: ${REPORADAR_DATABASE_PASSWORD:?Set REPORADAR_DATABASE_PASSWORD in your deployment environment}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U reporadar -d reporadar"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  api:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      REPORADAR_DATABASE_URL: jdbc:postgresql://postgres:5432/reporadar
+      REPORADAR_DATABASE_USERNAME: reporadar
+      REPORADAR_DATABASE_PASSWORD: ${REPORADAR_DATABASE_PASSWORD:?Set REPORADAR_DATABASE_PASSWORD in your deployment environment}
+      REPORADAR_JWT_SECRET: ${REPORADAR_JWT_SECRET:?Set a 256-bit base64 JWT signing secret}
+      REPORADAR_GITHUB_TOKEN: ${REPORADAR_GITHUB_TOKEN:-}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:8081}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/actuator/health >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  frontend:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+      args:
+        VITE_API_BASE_URL: /api/v1
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8081}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

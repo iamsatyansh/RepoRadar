@@ -1,0 +1,7 @@
+.git
+.manus
+.manus-logs
+node_modules
+dist
+backend/target
+**/.DS_Store
