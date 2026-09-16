@@ -35,7 +35,7 @@ management:
 app:
   jwt:
     issuer: ${JWT_ISSUER:reporadar-api}
-    secret: ${REPORADAR_JWT_SECRET:test-only-jwt-secret-not-a-real-secret=}
+    secret: ${REPORADAR_JWT_SECRET}
     access-token-ttl: ${JWT_ACCESS_TOKEN_TTL:PT1H}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
