@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
-    private static final String SECRET = "test-only-jwt-secret-not-a-real-secret";
+    private static final String SECRET = "VGhpcyBpcyBhIHRlc3Qtb25seSBKV1Qgc2VjcmV0IGZvciB0ZXN0aW5nLg==";
     @Mock private UserAccountRepository users;
     private final PasswordEncoder encoder = new BCryptPasswordEncoder();
     private final JwtTokenService tokens = new JwtTokenService(new JwtProperties("reporadar-test", SECRET, Duration.ofHours(1)));
