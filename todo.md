@@ -1,0 +1,31 @@
+# RepoRadar Delivery Checklist
+
+- [x] Establish CSS design tokens for color, typography, spacing, radii, elevation, motion, breakpoints, and focus visibility.
+- [x] Create shared navigation, button, input, source-chip, data-panel, skeleton, empty-state, and error-state components.
+- [x] Build landing, authentication, dashboard, analysis, saved repositories, search/analyze, and profile/settings pages with responsive layouts.
+- [x] Implement accessible chart, table, and analysis-loading states with useful labels and tooltips.
+- [x] Inspect desktop and mobile rendering, then apply a visual-review refinement pass to hierarchy and product evidence.
+- [x] Complete the Spring Boot backend, persistence, JWT security, GitHub integration, caching, validation, Docker, CI, and end-to-end verification in a Java-capable runtime; use `BACKEND_HANDOFF.md` as the matched contract.
+- [x] Create the Maven-based Spring Boot backend module with Java 21, Spring Data JPA, PostgreSQL, Flyway, and test dependencies.
+- [x] Define `User`, `Repository`, `Analysis`, `LanguageStat`, `ContributorSnapshot`, `CommitSnapshot`, and `Insight` JPA entities with explicit ownership and uniqueness constraints.
+- [x] Add Spring Data JPA repositories for user lookup, repository deduplication, user-owned analysis history, and child analysis data.
+- [ ] Run the Testcontainers persistence suite on a Docker Engine release compatible with Testcontainers Java 1.21.4; in this Docker 29 sandbox, the suite remains source-compiled while Flyway and all API flows were smoke-tested against PostgreSQL.
+- [x] Add Spring Boot configuration properties, security filters, JWT authentication, registration/login endpoints, request validation, and RFC 7807-style error responses.
+- [x] Implement GitHub REST client integration for repository metadata, languages, commits, contributors, rate-limit translation, caching, and upstream failure translation.
+- [x] Implement analysis orchestration, deterministic insight rules, persistence snapshots, Caffeine caching, pagination, ownership enforcement, and API DTO mapping.
+- [x] Complete the frontend integration against the API, including authenticated routing, a same-origin development proxy, and server error presentation.
+- [x] Add PostgreSQL Docker Compose, backend/frontend Dockerfiles, database health checks, CI quality gates, and production-focused configuration documentation.
+- [x] Expand automated coverage with MVC/security and GitHub-adapter tests; unit tests and a Testcontainers persistence suite are present, while the Docker 29 runtime gate remains documented separately.
+- [x] Add MockMvc tests for authentication success, validation failures, unauthenticated access, and standardized problem responses.
+- [x] Add MockMvc tests for analysis endpoint authorization, malformed repository URLs, and user-owned record behavior.
+- [x] Add GitHub adapter tests for metadata, languages, commits, contributors, cache behavior, 404, rate limit, timeout, and upstream 5xx translation.
+- [x] Run the expanded backend quality suite and document the covered API/error matrix: 15 portable tests passed with zero failures and zero errors.
+- [x] Diagnose the deployed registration API failure and confirm the browser-visible request status and response: the static `manus.space` site returns a platform HTML 500 because no Spring Boot API is deployed behind `/api/v1`.
+- [x] Replace the generic registration failure with a clear backend-availability message and prevent misleading account-creation attempts when the API is not deployed.
+- [x] Verify the mobile registration flow after the corrective release and publish the fixed behavior.
+- [x] Create a clean, credential-free ZIP containing the complete frontend, backend, Docker Compose, CI, test, and documentation source.
+- [x] Add a detailed local-run and Docker deployment guide covering all required secrets, commands, verification steps, and the published static-preview limitation.
+- [x] Verify the ZIP manifest and deliver the archive with the setup guide.
+- [x] Version the release, verify the integrated product, and document deployment prerequisites and operational limits.
+- [x] Add meaningful unit and integration tests, Docker, Compose, CI, and complete README documentation.
+- [ ] Perform final visual, accessibility, and end-to-end verification; resolve findings before delivery.
