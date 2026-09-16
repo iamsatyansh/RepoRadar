@@ -1,0 +1,36 @@
+name: quality
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - run: mvn -q test
+        working-directory: backend
+      - run: mvn -q -DskipTests package
+        working-directory: backend
+      - run: docker compose config >/dev/null
+        env:
+          REPORADAR_DATABASE_PASSWORD: ci-development-password
+          REPORADAR_JWT_SECRET: ci-test-only-not-a-secret
